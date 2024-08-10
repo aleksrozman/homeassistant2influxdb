@@ -214,7 +214,7 @@ def main():
                         event = Event(
                             _event_type,
                             data={"new_state": state},
-                            time_fired=_time_fired
+                            time_fired_timestamp=_time_fired.timestamp()
                         )
                     except InvalidEntityFormatError:
                         pass
@@ -249,7 +249,7 @@ def main():
                                 influx.write(influx_batch_json)
                             influx_batch_size_cur = 0
                             influx_batch_json = []
-            except Error as mysql_error:
+            except sqlite3.Error as mysql_error:
                 print(f"MySQL error on row {row_counter}: {mysql_error}")
                 continue
             progress_bar.close()
